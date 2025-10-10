@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "email-validator": "^2.0.4",
-    "jshint": "^2.13.6",
-    "vue-router": "^4.1.6"
-  }
-}
