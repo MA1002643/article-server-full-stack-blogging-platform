@@ -95,23 +95,67 @@
 
 ```sh
 └── article-server-full-stack-blogging-platform/
-    ├── Article Server Backend
-    │   ├── .DS_Store
-    │   ├── README.md
-    │   ├── app
-    │   ├── database.js
-    │   ├── db.sqlite
-    │   ├── node_modules
-    │   ├── package-lock.json
-    │   ├── package.json
-    │   ├── server.js
-    │   └── tests
-    └── frontend-app
-        ├── .DS_Store
-        ├── package-lock.json
-        ├── package.json
-        ├── screencast.mp4
-        └── vue-project
+├── Article Server Backend/
+│   ├── app/
+│   │   ├── controllers/
+│   │   │   ├── articles.controllers.js
+│   │   │   ├── comments.controllers.js
+│   │   │   └── user.controllers.js
+│   │   ├── lib/
+│   │   │   └── authentication.js
+│   │   ├── models/
+│   │   │   ├── articles.models.js
+│   │   │   ├── comments.models.js
+│   │   │   └── user.models.js
+│   │   └── routes/
+│   │       ├── articles.routes.js
+│   │       ├── comments.routes.js
+│   │       └── user.routes.js
+│   ├── database.js
+│   ├── db.sqlite
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── README.md
+│   └── server.js
+├── frontend-app/
+│   ├── vue-project/
+│   │   ├── src/
+│   │   │   ├── components/
+│   │   │   │   ├── Article.vue
+│   │   │   │   ├── CreateArt.vue
+│   │   │   │   ├── deleteArt.vue
+│   │   │   │   ├── deleteComment.vue
+│   │   │   │   ├── UpdateArt.vue
+│   │   │   │   ├── usersCreate.vue
+│   │   │   │   └── UsersGetAll.vue
+│   │   │   ├── pages/
+│   │   │   │   ├── Dashboard.vue
+│   │   │   │   ├── Home.vue
+│   │   │   │   └── Login.vue
+│   │   │   ├── router/
+│   │   │   │   └── index.js
+│   │   │   ├── Services/
+│   │   │   │   ├── article.service.js
+│   │   │   │   ├── comments.service.js
+│   │   │   │   └── users.service.js
+│   │   │   ├── Views/
+│   │   │   │   └── App.vue
+│   │   │   └── main.js
+│   │   ├── .gitignore
+│   │   ├── index.html
+│   │   ├── package-lock.json
+│   │   ├── package.json
+│   │   ├── README.md
+│   │   └── vite.config.js
+│   ├── package-lock.json
+│   ├── package.json
+│   └── screencast.mp4
+├── .gitignore
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
+├── LICENSE
+├── README.md
+└── SECURITY.md
 ```
 
 ---
