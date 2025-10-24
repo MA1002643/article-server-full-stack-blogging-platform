@@ -3,31 +3,28 @@
 <!-- HEADER STYLE: CLASSIC -->
 <div align="center">
 
-# ARTICLE-SERVER-FULL-STACK-BLOGGING-PLATFORM
-
-<em>Empowering Creators, Inspiring Readers, Unleashing Ideas</em>
+<h1 align="center">ARTICLE-SERVER-FULL-STACK-BLOGGING-PLATFORM</h1>
+<p align="center"><em>Empowering Creators, Inspiring Readers, Unleashing Ideas</em></p>
 
 <!-- BADGES -->
-<img src="https://img.shields.io/github/license/MA1002643/article-server-full-stack-blogging-platform?style=flat&logo=opensourceinitiative&logoColor=white&color=0080ff" alt="license">
+<a href="https://github.com/MA1002643/article-server-full-stack-blogging-platform/blob/main/LICENSE" alt="license">
+   <img src="https://img.shields.io/badge/license-MIT-green?style=flat&logo=opensourceinitiative&logoColor=white" alt="MIT License" />
+</a>
 <img src="https://img.shields.io/github/last-commit/MA1002643/article-server-full-stack-blogging-platform?style=flat&logo=git&logoColor=white&color=0080ff" alt="last-commit">
-<img src="https://img.shields.io/github/languages/top/MA1002643/article-server-full-stack-blogging-platform?style=flat&color=0080ff" alt="repo-top-language">
-<img src="https://img.shields.io/github/languages/count/MA1002643/article-server-full-stack-blogging-platform?style=flat&color=0080ff" alt="repo-language-count">
-
+<a href="https://github.com/MA1002643/article-server-full-stack-blogging-platform/discussions" alt="Discussions">
+   <img src="https://img.shields.io/github/discussions/MA1002643/article-server-full-stack-blogging-platform" alt="Discussions" />
+</a>
+<a href="https://github.com/MA1002643/article-server-full-stack-blogging-platform/stargazers">
+   <img src="https://custom-icon-badges.demolab.com/github/stars/MA1002643/article-server-full-stack-blogging-platform?logo=star&style=flat" alt="stars" />
+</a>
+<a href="https://github.com/MA1002643/article-server-full-stack-blogging-platform/issues">
+   <img src="https://custom-icon-badges.demolab.com/github/issues-raw/MA1002643/article-server-full-stack-blogging-platform?logo=issue" alt="issues" />
+</a>
+<br>
 <em>Built with the tools and technologies:</em>
 
-<img src="https://img.shields.io/badge/Express-000000.svg?style=flat&logo=Express&logoColor=white" alt="Express">
-<img src="https://img.shields.io/badge/JSON-000000.svg?style=flat&logo=JSON&logoColor=white" alt="JSON">
-<img src="https://img.shields.io/badge/Markdown-000000.svg?style=flat&logo=Markdown&logoColor=white" alt="Markdown">
-<img src="https://img.shields.io/badge/npm-CB3837.svg?style=flat&logo=npm&logoColor=white" alt="npm">
-<img src="https://img.shields.io/badge/Chai-A30701.svg?style=flat&logo=Chai&logoColor=white" alt="Chai">
-<img src="https://img.shields.io/badge/Mocha-8D6748.svg?style=flat&logo=Mocha&logoColor=white" alt="Mocha">
-<br>
-<img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=flat&logo=JavaScript&logoColor=black" alt="JavaScript">
-<img src="https://img.shields.io/badge/Nodemon-76D04B.svg?style=flat&logo=Nodemon&logoColor=white" alt="Nodemon">
-<img src="https://img.shields.io/badge/Vue.js-4FC08D.svg?style=flat&logo=vuedotjs&logoColor=white" alt="Vue.js">
-<img src="https://img.shields.io/badge/SQLite-003B57.svg?style=flat&logo=SQLite&logoColor=white" alt="SQLite">
-<img src="https://img.shields.io/badge/Vite-646CFF.svg?style=flat&logo=Vite&logoColor=white" alt="Vite">
-<img src="https://img.shields.io/badge/Bootstrap-7952B3.svg?style=flat&logo=Bootstrap&logoColor=white" alt="Bootstrap">
+<!-- TECH-STACK:START -->
+<!-- TECH-STACK:END -->
 
 </div>
 <br>
@@ -54,33 +51,43 @@
 
 ## ✨ Overview
 
-article-server-full-stack-blogging-platform is an open-source, full-stack solution for building modern blogging platforms. It combines a Vue 3 frontend with a Node.js backend, providing a seamless environment for content management, user authentication, and dynamic interactions.
+**article-server-full-stack-blogging-platform** is an open-source project featuring a **Vue 3 + Vite** frontend and a **Node.js + Express** backend. The repository provides a clear full-stack structure for building, testing, and running blogging-style applications using a modern JavaScript ecosystem.
 
-**Why article-server-full-stack-blogging-platform?**
+### 📚 Summary
 
-This project empowers developers to rapidly develop, extend, and deploy full-featured blogging applications. The core features include:
+- 🟢 **Frontend:** Vue 3 + Vite with Bootstrap styling
+- 🔵 **Backend:** Express + Node.js with SQLite database
+- 🟣 **Testing:** Mocha + Chai unit tests included
+- 🟠 **Structure:** Two distinct folders for frontend and backend separation
+- ⚪ **Database:** Local SQLite integration for lightweight persistence
 
-- 🟢 **Responsive UI:** Utilizes Vue 3, Vite, and Bootstrap to deliver a sleek, mobile-friendly interface.
-- 🔵 **Robust API:** Implements RESTful endpoints for articles, comments, and user management, ensuring smooth data flow.
-- 🟡 **Secure Authentication:** Incorporates token-based login, registration, and session handling for secure user interactions.
-- 🟠 **Content Management:** Supports CRUD operations for articles and comments, enabling dynamic content updates.
-- 🟣 **Modular Architecture:** Designed for scalability and maintainability, facilitating easy extension and customization.
+---
+
+<a id="ui-preview"></a>
+
+## 🎨 UI Preview
+
+|                  Frontend View                   |               Admin / Dashboard View               |
+| :----------------------------------------------: | :------------------------------------------------: |
+| ![Article listing](screenshots/article-list.png) | ![Dashboard Screenshot](screenshots/dashboard.png) |
 
 ---
 
 ## 📌 Features
 
-|     | Component         | Details                                                                                                                                                       |
-| :-- | :---------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| ⚙️  | **Architecture**  | <ul><li>Full-stack MVC pattern</li><li>Frontend: Vue.js SPA</li><li>Backend: Express.js REST API</li><li>Database: SQLite</li></ul>                           |
-| 🔩  | **Code Quality**  | <ul><li>Consistent code style with ESLint & JSHint</li><li>Modular components in Vue.js</li><li>Clear separation of frontend/backend</li></ul>                |
-| 📄  | **Documentation** | <ul><li>README with setup instructions</li><li>API documentation via comments</li><li>Basic user guide</li></ul>                                              |
-| 🔌  | **Integrations**  | <ul><li>Vue Router for client-side routing</li><li>Vite for build tooling</li><li>SQLite for data storage</li><li>npm scripts for CI/CD</li></ul>             |
-| 🧩  | **Modularity**    | <ul><li>Frontend components in separate Vue files</li><li>Backend routes modularized in Express</li><li>Reusable utility functions</li></ul>                  |
-| 🧪  | **Testing**       | <ul><li>Unit tests with Mocha & Chai</li><li>HTTP integration tests with chai-http</li><li>Test scripts in package.json</li></ul>                             |
-| ⚡️ | **Performance**   | <ul><li>Client-side rendering with Vue.js for responsiveness</li><li>Efficient SQLite queries</li><li>Vite optimized build for fast reloads</li></ul>         |
-| 🛡️  | **Security**      | <ul><li>Input validation with Joi</li><li>Basic sanitization with bad-words filter</li><li>CORS middleware enabled</li></ul>                                  |
-| 📦  | **Dependencies**  | <ul><li>Frontend: Vue.js, vue-router, vite</li><li>Backend: express, sqlite3, body-parser, joi</li><li>Dev: @vitejs/plugin-vue, mocha, chai, jshint</li></ul> |
+|     | Component              | Details                                                                                                                                                                                                                                                       |
+| :-- | :--------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| ⚙️  | **Architecture**       | <ul><li>Full-stack **MVC pattern**</li><li>Frontend: **Vue.js**</li><li>Backend: **Express.js** REST API</li><li>Database: **SQLite** (local-file storage)</li></ul>                                                                                          |
+| 📰  | **Core Features**      | <ul><li>Blog article management — **Create, Read, Update, Delete (CRUD)**</li><li>Tag-based article categorisation & filtering</li><li>Markdown-style or WYSIWYG editor for writing posts</li><li>Responsive UI optimised for both desktop & mobile</li></ul> |
+| 👤  | **User & Auth System** | <ul><li>User registration & login (JWT / cookie-based authentication)</li><li>Author profile page displaying bio & authored posts</li><li>Role-based access control (Standard User / Author / Admin)</li></ul>                                                |
+| 🔌  | **Integrations**       | <ul><li>**Vue Router** for smooth client-side navigation</li><li>**Axios** (or Fetch API) for RESTful communication</li><li>**dotenv** for environment variable configuration</li><li>Custom **npm/Yarn scripts** for dev, build & testing</li></ul>          |
+| 🧩  | **Modularity**         | <ul><li>Reusable **Vue components** (e.g., `PostList.vue`, `PostEditor.vue`, `Navbar.vue`)</li><li>Backend routes modularised by domain (Auth, Posts, Users)</li><li>Shared utility modules for validation, sanitisation & helpers</li></ul>                  |
+| 🔩  | **Code Quality**       | <ul><li>Consistent linting with **ESLint / JSHint**</li><li>Clean and readable folder structure for scalability</li><li>Inline code comments and clear documentation blocks</li></ul>                                                                         |
+| 🧪  | **Testing**            | <ul><li>Backend **unit tests** with **Mocha** & **Chai**</li><li>HTTP integration tests via **chai-http**</li><li>Automated test scripts in `package.json` (`npm test`)</li></ul>                                                                             |
+| ⚡️ | **Performance**        | <ul><li>Fast builds using **Vite** bundler</li><li>Optimised **SQLite queries** for lightweight operations</li><li>Client-side performance tuning with code-splitting & lazy loading</li></ul>                                                                |
+| 🛡️  | **Security**           | <ul><li>Input validation using **Joi**</li><li>Basic sanitisation and profanity filtering</li><li>**CORS** middleware enabled</li><li>Protected routes & authentication middleware for content editing</li></ul>                                              |
+| 📄  | **Documentation**      | <ul><li>Comprehensive **README** with setup, usage & contribution guide</li><li>Inline API documentation within backend routes</li><li>Example environment config (`.env.example`)</li></ul>                                                                  |
+| 📦  | **Dependencies**       | <ul><li>**Frontend:** Vue.js, Vue Router, Axios, Vite</li><li>**Backend:** Express, SQLite3, body-parser, Joi, dotenv</li><li>**Dev Tools:** @vitejs/plugin-vue, ESLint, JSHint, Mocha, Chai</li></ul>                                                        |
 
 ---
 
@@ -548,67 +555,65 @@ npm test
 
 ---
 
+## 🎓 Learning Outcomes
+
+- Designed and implemented a **full-stack blogging platform** using **Vue.js**, **Express.js**, and **SQLite**, following the MVC pattern.
+- Strengthened understanding of **RESTful API development**, **client–server communication**, and **state management** in modern web apps.
+- Gained hands-on experience in **authentication and authorization**, including protected routes and JWT-based sessions.
+- Improved proficiency with **frontend frameworks (Vue.js)** and **backend technologies (Node.js/Express)** for real-world production setups.
+- Practiced **database design and integration** with SQLite, including CRUD operations, schema management, and relational logic.
+- Applied **modular software architecture principles** to achieve maintainable, scalable, and testable code across both frontend and backend.
+- Developed and executed **unit and integration tests** using **Mocha**, **Chai**, and **chai-http** to ensure system reliability.
+- Enhanced understanding of **secure web application development**, implementing input validation, sanitisation, and CORS protection.
+- Experienced complete **Dev–Build–Test workflow** using modern tooling (Vite, ESLint, npm scripts) and CI-friendly practices.
+- Strengthened teamwork and professional GitHub practices through **version control**, **branching strategies**, and **clear documentation**.
+
+---
+
 ## 📈 Roadmap
 
-- [x] **`Task 1`**: <strike>Implement feature one.</strike>
+- [ ] **`Task 1`**: Implement feature one.
 - [ ] **`Task 2`**: Implement feature two.
 - [ ] **`Task 3`**: Implement feature three.
 
 ---
 
-## 🤝 Contributing
+<a id="contributors"></a>
 
-- **💬 [Join the Discussions](https://github.com/MA1002643/article-server-full-stack-blogging-platform/discussions)**: Share your insights, provide feedback, or ask questions.
-- **🐛 [Report Issues](https://github.com/MA1002643/article-server-full-stack-blogging-platform/issues)**: Submit bugs found or log feature requests for the `article-server-full-stack-blogging-platform` project.
-- **💡 [Submit Pull Requests](https://github.com/MA1002643/article-server-full-stack-blogging-platform/blob/main/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
+## 🤝 Contributors
 
-<details closed>
-<summary>Contributing Guidelines</summary>
-
-1. **Fork the Repository**: Start by forking the project repository to your github account.
-2. **Clone Locally**: Clone the forked repository to your local machine using a git client.
-   ```sh
-   git clone https://github.com/MA1002643/article-server-full-stack-blogging-platform
-   ```
-3. **Create a New Branch**: Always work on a new branch, giving it a descriptive name.
-   ```sh
-   git checkout -b new-feature-x
-   ```
-4. **Make Your Changes**: Develop and test your changes locally.
-5. **Commit Your Changes**: Commit with a clear message describing your updates.
-   ```sh
-   git commit -m 'Implemented new feature x.'
-   ```
-6. **Push to github**: Push the changes to your forked repository.
-   ```sh
-   git push origin new-feature-x
-   ```
-7. **Submit a Pull Request**: Create a PR against the original project repository. Clearly describe the changes and their motivations.
-8. **Review**: Once your PR is reviewed and approved, it will be merged into the main branch. Congratulations on your contribution!
-</details>
-
-<details closed>
-<summary>Contributor Graph</summary>
-<br>
 <p align="left">
-   <a href="https://github.com{/MA1002643/article-server-full-stack-blogging-platform/}graphs/contributors">
-      <img src="https://contrib.rocks/image?repo=MA1002643/article-server-full-stack-blogging-platform">
-   </a>
-</p>
-</details>
+
+<!-- CONTRIBUTORS:START -->
+<!-- CONTRIBUTORS:END -->
+
+ </p>
 
 ---
 
-## 📜 License
-
-Article-server-full-stack-blogging-platform is protected under the [LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
-
----
+<a id="acknowledgments"></a>
 
 ## ✨ Acknowledgments
 
-- Credit `contributors`, `inspiration`, `references`, etc.
-
-<div align="left"><a href="#top">⬆ Return</a></div>
+- Inspired by modern publishing platforms such as **Medium**, **Hashnode**, and **Dev.to**, which influenced the app’s clean design and user-centric experience.
+- Developed as part of a **full-stack software engineering initiative**, focused on mastering scalable web architecture and practical project delivery.
+- Grateful to the **open-source community** behind **Node.js**, **Express.js**, **Vue.js**, and **SQLite** for providing the tools and frameworks that made this project possible.
+- Appreciation to **mentors, peers, and online contributors** whose feedback and shared resources helped refine both technical and architectural decisions.
+- Created to demonstrate **industry-relevant full-stack development skills** — including REST API design, authentication systems, modular architecture, and end-to-end testing.
 
 ---
+
+<a id="license"></a>
+
+## 📜 License
+
+This project is licensed under the **[MIT License](https://github.com/MA1002643/article-server-full-stack-blogging-platform/blob/main/LICENSE)**. See the **[LICENSE](https://choosealicense.com/licenses/)** file for full details.
+
+#
+
+<p align="center">
+  <strong>© 2025 Muhammad Abdullah</strong><br>
+  Developed with 💙 using Vue 3, Vite, Vue Router, Bootstrap, Express (Node.js) & SQLite<br>
+  <a href="#top"><img alt="Back to Top" src="https://img.shields.io/badge/Back_to_Top-0A0A0A?style=for-the-badge">
+</a>
+</p>
