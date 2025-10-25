@@ -28,21 +28,27 @@
 <!-- TECH-STACK:START -->
 
 <div align="center" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;margin:0 auto;">
-<img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=flat&logo=JavaScript&logoColor=black" alt="JavaScript">
-<img src="https://img.shields.io/badge/JSON-000000.svg?style=flat&logo=JSON&logoColor=white" alt="JSON">
-<img src="https://img.shields.io/badge/Markdown-000000.svg?style=flat&logo=Markdown&logoColor=white" alt="Markdown">
-<img src="https://img.shields.io/badge/HTML5-444444.svg?style=flat" alt="HTML5">
-<img src="https://img.shields.io/badge/Express-000000.svg?style=flat&logo=Express&logoColor=white" alt="Express">
+<img src="https://img.shields.io/badge/simple-icons-444444.svg?style=flat&logo=simple-icons&logoColor=white" alt="simple-icons">
+<img src="https://img.shields.io/badge/Bootstrap-7952B3.svg?style=flat&logo=bootstrap&logoColor=white" alt="Bootstrap">
+<img src="https://img.shields.io/badge/CORS-444444.svg?style=flat&logo=cors&logoColor=white" alt="CORS">
 <img src="https://img.shields.io/badge/Vue.js-4FC08D.svg?style=flat&logo=vuedotjs&logoColor=white" alt="Vue.js">
-<img src="https://img.shields.io/badge/Bootstrap-7952B3.svg?style=flat&logo=Bootstrap&logoColor=white" alt="Bootstrap">
-<img src="https://img.shields.io/badge/CORS-444444.svg?style=flat" alt="CORS">
-<img src="https://img.shields.io/badge/Vite-444444.svg?style=flat" alt="Vite">
-<img src="https://img.shields.io/badge/SQLite-003B57.svg?style=flat&logo=SQLite&logoColor=white" alt="SQLite">
-<img src="https://img.shields.io/badge/npm-CB3837.svg?style=flat&logo=npm&logoColor=white" alt="npm">
-<img src="https://img.shields.io/badge/Vite-646CFF.svg?style=flat&logo=Vite&logoColor=white" alt="Vite">
-<img src="https://img.shields.io/badge/Nodemon-76D04B.svg?style=flat&logo=Nodemon&logoColor=white" alt="Nodemon">
-<img src="https://img.shields.io/badge/Chai-A30701.svg?style=flat&logo=Chai&logoColor=white" alt="Chai">
-<img src="https://img.shields.io/badge/Mocha-8D6748.svg?style=flat&logo=Mocha&logoColor=white" alt="Mocha">
+<img src="https://img.shields.io/badge/vue-router-444444.svg?style=flat&logo=vue-router&logoColor=white" alt="vue-router">
+<img src="https://img.shields.io/badge/%40types%2Fbootstrap-444444.svg?style=flat&logo=%40types%2Fbootstrap&logoColor=white" alt="@types/bootstrap">
+<img src="https://img.shields.io/badge/%40vitejs%2Fplugin-vue-444444.svg?style=flat&logo=%40vitejs%2Fplugin-vue&logoColor=white" alt="@vitejs/plugin-vue">
+<img src="https://img.shields.io/badge/Vite-646CFF.svg?style=flat&logo=vite&logoColor=white" alt="Vite">
+<img src="https://img.shields.io/badge/bad-words-444444.svg?style=flat&logo=bad-words&logoColor=white" alt="bad-words">
+<img src="https://img.shields.io/badge/body-parser-444444.svg?style=flat&logo=body-parser&logoColor=white" alt="body-parser">
+<img src="https://img.shields.io/badge/chai-A30701.svg?style=flat&logo=chai&logoColor=white" alt="chai">
+<img src="https://img.shields.io/badge/chai-http-444444.svg?style=flat&logo=chai-http&logoColor=white" alt="chai-http">
+<img src="https://img.shields.io/badge/Express-000000.svg?style=flat&logo=express&logoColor=white" alt="Express">
+<img src="https://img.shields.io/badge/joi-444444.svg?style=flat&logo=joi&logoColor=white" alt="joi">
+<img src="https://img.shields.io/badge/jshint-444444.svg?style=flat&logo=jshint&logoColor=white" alt="jshint">
+<img src="https://img.shields.io/badge/mocha-8D6748.svg?style=flat&logo=mocha&logoColor=white" alt="mocha">
+<img src="https://img.shields.io/badge/morgan-444444.svg?style=flat&logo=morgan&logoColor=white" alt="morgan">
+<img src="https://img.shields.io/badge/Nodemon-76D04B.svg?style=flat&logo=nodemon&logoColor=white" alt="Nodemon">
+<img src="https://img.shields.io/badge/SQLite-003B57.svg?style=flat&logo=sqlite&logoColor=white" alt="SQLite">
+<img src="https://img.shields.io/badge/HTML5-E34F26.svg?style=flat&logo=html5&logoColor=white" alt="HTML5">
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=flat&logo=javascript&logoColor=white" alt="JavaScript">
 </div>
 
 <!-- TECH-STACK:END -->
