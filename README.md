@@ -22,7 +22,7 @@
 </a>
 <br>
 <em>Built with the tools and technologies:</em>
-<br>
+
 <br>
 <!-- TECH-STACK:START -->
 
@@ -373,7 +373,6 @@
       </details>
       </details>
    </details>
-
 
 </details>
 
