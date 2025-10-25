@@ -17,7 +17,7 @@ jobs:
       README_PATH: README.md
       SECTION_START: "<!-- TECH-STACK:START -->"
       SECTION_END: "<!-- TECH-STACK:END -->"
-      BADGE_STYLE: "flat" # keep your current style
+      BADGE_STYLE: "flat"
     steps:
       - uses: actions/checkout@v4
         with:
@@ -46,7 +46,6 @@ jobs:
             process.exit(1);
           }
 
-          // ---------- ALWAYS-SHOW badges (exact copies, grouped) ----------
           const BASE = {
             languages: [
               `<img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=${BADGE_STYLE}&logo=JavaScript&logoColor=black" alt="JavaScript">`,
@@ -70,7 +69,6 @@ jobs:
             ],
           };
 
-          // ---------- Helpers to detect additional tech from the repo ----------
           const IGNORE_DIRS = new Set(['.git','node_modules','dist','build','coverage','.next','.turbo','.cache','.venv','vendor','target','bin','obj']);
           const EXT_LANG = new Map(Object.entries({
             "js":"JavaScript","jsx":"JavaScript","mjs":"JavaScript",
@@ -101,7 +99,6 @@ jobs:
           function readTextSafe(p){ try { return fs.readFileSync(p,'utf8'); } catch { return ''; } }
           function parseJSON(t){ try { return JSON.parse(t); } catch { return null; } }
 
-          // Build a badge (HTML <img>) with brand color/logo where possible
           async function makeBadgeFactory() {
             const SI = await import('simple-icons');
             const preferWhiteLogo = () => true;
@@ -133,13 +130,11 @@ jobs:
             };
           }
 
-          // Extract label from an <img ... alt="Label"> tag
           function labelFromImgTag(tag){
             const m = tag.match(/alt="([^"]+)"/i);
             return m ? m[1].trim() : null;
           }
 
-          // Merge arrays of <img> tags by deduping on alt label
           function mergeUnique(existingTags, newTags){
             const seen = new Set(existingTags.map(labelFromImgTag).filter(Boolean).map(normalizeLabel));
             const add = [];
@@ -153,7 +148,6 @@ jobs:
           (async () => {
             const makeBadge = await makeBadgeFactory();
 
-            // 1) Start with BASE (guaranteed)
             const buckets = {
               languages: [...BASE.languages],
               frameworks: [...BASE.frameworks],
@@ -161,7 +155,6 @@ jobs:
               tools:      [...BASE.tools],
             };
 
-            // 2) Detect extra tech from package.json, scripts, etc.
             const files = await walk(process.cwd());
             const pkgPaths = files.filter(f => /(^|\/)package\.json$/i.test(f));
 
@@ -192,7 +185,6 @@ jobs:
                   if (n === 'typescript') buckets.languages = mergeUnique(buckets.languages, addBadges(['TypeScript']));
                 }
               }
-              // Scripts hints
               for (const s of Object.values(j.scripts || {})){
                 const line = String(s).toLowerCase();
                 if (/vite/.test(line)) buckets.frameworks = mergeUnique(buckets.frameworks, addBadges(['Vite']));
@@ -201,7 +193,6 @@ jobs:
               }
             }
 
-            // Language detection by extensions (adds TypeScript/HTML/CSS/SQL if found)
             const langTotals = new Map();
             for (const f of files) {
               const ext = path.extname(f).slice(1).toLowerCase();
@@ -212,10 +203,10 @@ jobs:
               buckets.languages = mergeUnique(buckets.languages, [ makeBadge(lang) ]);
             }
 
-            // 3) Build ONE compact section: ONLY icons (no headings, no chips)
+            // Centered, icons-only block
             const section = [
               '',
-              '<div align="left" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center">',
+              '<div align="center" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;margin:0 auto;">',
               ...buckets.languages,
               ...buckets.frameworks,
               ...buckets.databases,
@@ -224,7 +215,6 @@ jobs:
               '',
             ].join('\n');
 
-            // 4) Replace between markers
             let readme = fs.readFileSync(README_PATH,'utf8');
             const si = readme.indexOf(START_MARKER);
             const ei = readme.indexOf(END_MARKER);
@@ -241,7 +231,7 @@ jobs:
               process.exit(0);
             }
             fs.writeFileSync(README_PATH, next, 'utf8');
-            console.log('✅ README tech stack badges updated (icons only, single block).');
+            console.log('✅ README tech stack badges updated (icons only, centered).');
           })().catch(e => { console.error('❌ Failed:', e); process.exit(1); });
           NODE
 
@@ -257,7 +247,7 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "${README_PATH}"
-          git commit -m "chore: refresh Tech Stack badges (icons only, single block, flat style)"
+          git commit -m "chore: refresh Tech Stack badges (icons only, centered, flat style)"
           git push https://x-access-token:${PAT_OR_TOKEN}@github.com/${GITHUB_REPOSITORY}.git HEAD:${GITHUB_REF_NAME:-main} || \
           git push https://x-access-token:${PAT_OR_TOKEN}@github.com/${GITHUB_REPOSITORY}.git HEAD:main || \
           git push https://x-access-token:${PAT_OR_TOKEN}@github.com/${GITHUB_REPOSITORY}.git HEAD:master
