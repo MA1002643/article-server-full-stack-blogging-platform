@@ -46,7 +46,7 @@ jobs:
             process.exit(1);
           }
 
-          // ---------- Your ALWAYS-SHOW badges (exact copies, grouped) ----------
+          // ---------- ALWAYS-SHOW badges (exact copies, grouped) ----------
           const BASE = {
             languages: [
               `<img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=${BADGE_STYLE}&logo=JavaScript&logoColor=black" alt="JavaScript">`,
@@ -104,7 +104,7 @@ jobs:
           // Build a badge (HTML <img>) with brand color/logo where possible
           async function makeBadgeFactory() {
             const SI = await import('simple-icons');
-            const preferWhiteLogo = () => true; // keep white logos for consistency
+            const preferWhiteLogo = () => true;
 
             function siLookup(label) {
               const variants = [
@@ -148,11 +148,6 @@ jobs:
               if (l && !seen.has(l)) { seen.add(l); add.push(t); }
             }
             return existingTags.concat(add);
-          }
-
-          // Small inline "chip" to separate groups while keeping one continuous block
-          function chip(text){
-            return `<span title="${text}" style="font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid #e1e4e8;background:#fafbfc;margin:0 6px 6px 0;white-space:nowrap;"><strong>${text}</strong></span>`;
           }
 
           (async () => {
@@ -217,19 +212,13 @@ jobs:
               buckets.languages = mergeUnique(buckets.languages, [ makeBadge(lang) ]);
             }
 
-            // 3) Build ONE compact section: all badges in a single flex container, with tiny chips separating groups
+            // 3) Build ONE compact section: ONLY icons (no headings, no chips)
             const section = [
               '',
-              '### 🧰 Tech Stack',
-              '',
               '<div align="left" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center">',
-              chip('👨‍💻 Languages'),
               ...buckets.languages,
-              chip('📚 Frameworks & Libraries'),
               ...buckets.frameworks,
-              chip('🗄️ Databases & Cloud'),
               ...buckets.databases,
-              chip('🛠️ Software & Tools'),
               ...buckets.tools,
               '</div>',
               '',
@@ -252,7 +241,7 @@ jobs:
               process.exit(0);
             }
             fs.writeFileSync(README_PATH, next, 'utf8');
-            console.log('✅ README tech stack section updated (single compact block).');
+            console.log('✅ README tech stack badges updated (icons only, single block).');
           })().catch(e => { console.error('❌ Failed:', e); process.exit(1); });
           NODE
 
@@ -268,7 +257,7 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "${README_PATH}"
-          git commit -m "chore: refresh Tech Stack badges (single compact block, flat style)"
+          git commit -m "chore: refresh Tech Stack badges (icons only, single block, flat style)"
           git push https://x-access-token:${PAT_OR_TOKEN}@github.com/${GITHUB_REPOSITORY}.git HEAD:${GITHUB_REF_NAME:-main} || \
           git push https://x-access-token:${PAT_OR_TOKEN}@github.com/${GITHUB_REPOSITORY}.git HEAD:main || \
           git push https://x-access-token:${PAT_OR_TOKEN}@github.com/${GITHUB_REPOSITORY}.git HEAD:master
