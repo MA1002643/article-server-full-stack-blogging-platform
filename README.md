@@ -383,7 +383,6 @@
       </details>
    </details>
 
-
 </details>
 
 ---
@@ -470,15 +469,11 @@ npm test
 
 ## 🤝 Contributors
 
-<details>
-<summary>Contributor Graph</summary>
-
 <!-- CONTRIBUTORS:START -->
 <p align="left">
 <a href="https://github.com/MA1002643" title="MA1002643"><img src="https://avatars.githubusercontent.com/u/87866666?v=4" width="48" height="48" alt="MA1002643"/></a>
 </p>
 <!-- CONTRIBUTORS:END -->
-</details>
 
 ---
 
