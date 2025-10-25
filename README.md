@@ -56,23 +56,25 @@
 
 ## 📄 Table of Contents
 
-- [Overview](#-overview)
-- [UI Preview](#-ui-preview)
-- [Features](#-features)
-- [Project Structure](#-project-structure)
-  - [Project Index](#-project-index)
-- [Getting Started](#-getting-started)
-  - [Prerequisites](#-prerequisites)
-  - [Installation](#-installation)
-  - [Usage](#-usage)
-  - [Testing](#-testing)
-- [Learning Outcomes](#-learning-outcomes)
-- [Roadmap](#-roadmap)
-- [Contributors](#-contributors)
-- [Acknowledgments](#-acknowledgments)
-- [License](#-license)
+- [Overview](#overview)
+- [UI Preview](#ui-preview)
+- [Features](#features)
+- [Project Structure](#project-structure)
+  - [Project Index](#project-index)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Testing](#testing)
+- [Learning Outcomes](#learning-outcomes)
+- [Roadmap](#roadmap)
+- [Contributors](#contributors)
+- [Acknowledgments](#acknowledgments)
+- [License](#license)
 
 ---
+
+<a id="overview"></a>
 
 ## ✨ Overview
 
@@ -98,6 +100,8 @@
 
 ---
 
+<a id="key-features"></a>
+
 ## 📌 Features
 
 |     | Component              | Details                                                                                                                                                                                                                                                       |
@@ -115,6 +119,8 @@
 | 📦  | **Dependencies**       | <ul><li>**Frontend:** Vue.js, Vue Router, Axios, Vite</li><li>**Backend:** Express, SQLite3, body-parser, Joi, dotenv</li><li>**Dev Tools:** @vitejs/plugin-vue, ESLint, JSHint, Mocha, Chai</li></ul>                                                        |
 
 ---
+
+<a id="project-structure"></a>
 
 ## 📁 Project Structure
 
@@ -184,6 +190,8 @@
 ```
 
 ---
+
+<a id="project-index"></a>
 
 ### 📑 Project Index
 
@@ -379,7 +387,6 @@
       </details>
    </details>
 
-
 </details>
 
 ---
@@ -392,6 +399,8 @@ This project requires the following dependencies:
 
 - **Programming Language:** JavaScript
 - **Package Manager:** Npm
+
+<a id="installation"></a>
 
 ### ⚙️ Installation
 
@@ -417,6 +426,8 @@ Build article-server-full-stack-blogging-platform from the source and install de
 ❯ npm install
 ```
 
+<a id="usage"></a>
+
 ### 💻 Usage
 
 Run the project with:
@@ -439,6 +450,8 @@ npm test
 
 ---
 
+<a id="learning-outcomes"></a>
+
 ## 🎓 Learning Outcomes
 
 - Designed and implemented a **full-stack blogging platform** using **Vue.js**, **Express.js**, and **SQLite**, following the MVC pattern.
@@ -453,6 +466,8 @@ npm test
 - Strengthened teamwork and professional GitHub practices through **version control**, **branching strategies**, and **clear documentation**.
 
 ---
+
+<a id="roadmap"></a>
 
 ## 📈 Roadmap
 
