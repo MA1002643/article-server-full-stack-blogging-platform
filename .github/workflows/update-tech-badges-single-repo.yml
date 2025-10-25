@@ -2,7 +2,7 @@ name: Update tech badges
 
 on:
   push:
-    branches: ["**"] # run on every commit to any branch
+    branches: ["**"]
   schedule:
     - cron: "0 9 * * 1" # Mondays 09:00 UTC
   workflow_dispatch:
@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-          fetch-depth: 0 # full history so we can rebase
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -110,18 +110,24 @@ jobs:
             // Try multiple strategies to find a Simple Icons entry
             function siLookup(label) {
               const attempts = [
-                label,
+                label,                                      // e.g., "Express"
                 label.replace(/\./g,'dot'),
                 label.replace(/\+/g,'plus'),
                 label.replace(/#/g,'sharp'),
-                label.replace(/\s+/g,' '),
-                label.replace(/\s+/g,'-').toLowerCase(),
+                label.replace(/\s+/g,' '),                  // normalize spaces
+                label.replace(/\s+/g,'-').toLowerCase(),    // slug-style guess
                 label.toLowerCase(),
               ];
+
+              // Prefer si.get if available (v13)
               const getFn = si.get || si.Get || null;
+
               for (const attempt of attempts) {
                 let icon = null;
-                if (getFn) icon = getFn(attempt) || getFn(String(attempt).replace(/\s+/g,''));
+                if (getFn) {
+                  icon = getFn(attempt) || getFn(String(attempt).replace(/\s+/g,''));
+                }
+                // Fallback: scan exported icons by title (slower, but robust)
                 if (!icon) {
                   for (const k of Object.keys(si)) {
                     const v = si[k];
@@ -138,8 +144,9 @@ jobs:
 
             return (label) => {
               const icon = siLookup(label);
+              // If we found a brand, use its color & slug; otherwise, try a best-effort slug
               const hex  = (icon?.hex || '444444').replace(/^#/, '');
-              const slug = icon?.slug || label.replace(/\s+/g,'-').toLowerCase();
+              const slug = icon?.slug || label.replace(/\s+/g,'-').toLowerCase(); // guess slug for Shields
               const encLabel = encodeURIComponent(label);
               let url = `https://img.shields.io/badge/${encLabel}-${hex}.svg?style=${BADGE_STYLE}`;
               if (slug) url += `&logo=${encodeURIComponent(slug)}&logoColor=white`;
@@ -181,7 +188,7 @@ jobs:
                 for (const name of Object.keys(deps)){
                   const raw = String(name);
                   const n = normalizeLabel(raw);
-                  if (EXCLUDE.has(n)) continue;                      // skip noise/dev utils
+                  if (EXCLUDE.has(n)) continue;                      // skip noise
                   const label = MAP_DIRECT[n] || raw;                 // map to brand if known
                   detectedBadges.push(makeBadge(label));
                 }
@@ -235,7 +242,7 @@ jobs:
               process.exit(0);
             }
             fs.writeFileSync(README_PATH, next, 'utf8');
-            console.log('✅ README tech stack badges updated (auto-detected only, centered).');
+            console.log('✅ README tech stack badges updated (auto-detected only, centered, with logos/colors when available).');
           })().catch(e => { console.error('❌ Failed:', e); process.exit(1); });
           NODE
 
@@ -245,19 +252,15 @@ jobs:
           README_PATH: README.md
         run: |
           set -e
-
           if git diff --quiet -- "${README_PATH}"; then
             echo "No changes."
             exit 0
           fi
-
           git config --global --add safe.directory "$(pwd)"
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
           git add "${README_PATH}"
-          git commit -m "chore: refresh Tech Stack badges (auto-detected only, centered, flat style)"
-
+          git commit -m "chore: refresh Tech Stack badges (auto-detected only, centered)"
           BRANCH="${GITHUB_REF_NAME:-}"
           if [ -z "$BRANCH" ]; then
             BRANCH="$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')"
@@ -273,12 +276,8 @@ jobs:
           fi
           echo "Target branch: $BRANCH"
           git checkout -B "$BRANCH"
-
           git fetch origin
-          git pull --rebase origin "$BRANCH" || \
-          git pull --rebase origin main || \
-          git pull --rebase origin master || true
-
+          git pull --rebase origin "$BRANCH" || git pull --rebase origin main || git pull --rebase origin master || true
           PUSH_URL="https://x-access-token:${PAT_OR_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           ( git push "$PUSH_URL" HEAD:"$BRANCH" ) || (
             echo "First push failed, rebasing again and retrying..."
