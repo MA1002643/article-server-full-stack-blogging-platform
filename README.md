@@ -21,6 +21,7 @@
    <img src="https://custom-icon-badges.demolab.com/github/issues-raw/MA1002643/article-server-full-stack-blogging-platform?logo=issue" alt="issues" />
 </a>
 <br>
+<br>
 <em>Built with the tools and technologies:</em>
 <br>
 <br>
@@ -373,7 +374,6 @@
       </details>
       </details>
    </details>
-
 
 </details>
 
