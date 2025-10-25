@@ -22,7 +22,7 @@
 </a>
 <br>
 <em>Built with the tools and technologies:</em>
-<br>
+<br/>
 <!-- TECH-STACK:START -->
 
 <div align="center" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;margin:0 auto;">
@@ -372,7 +372,6 @@
       </details>
       </details>
    </details>
-
 
 </details>
 
