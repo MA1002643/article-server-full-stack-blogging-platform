@@ -2,10 +2,9 @@ name: Update tech badges
 
 on:
   push:
-    branches: ["**"] # any branch
-    tags: ["**"] # any tag
-  pull_request:
-    branches: ["**"] # run for commits pushed to PRs
+    branches: ["**"] # run on every commit to any branch
+  schedule:
+    - cron: "0 9 * * 1" # Mondays 09:00 UTC
   workflow_dispatch:
 
 permissions:
@@ -48,6 +47,7 @@ jobs:
             process.exit(1);
           }
 
+          // ----------------- Helpers -----------------
           const IGNORE_DIRS = new Set(['.git','node_modules','dist','build','coverage','.next','.turbo','.cache','.venv','vendor','target','bin','obj']);
           const EXT_LANG = new Map(Object.entries({
             "js":"JavaScript","jsx":"JavaScript","mjs":"JavaScript",
@@ -56,6 +56,31 @@ jobs:
             "css":"CSS3",
             "sql":"SQL"
           }));
+
+          // Packages we don't want badges for (utility/dev/internal)
+          const EXCLUDE = new Set([
+            'simple-icons','uuid','nanoid','ws','dotenv','cross-env','rimraf','concurrently',
+            'nodemon','nyc','mocha','chai','eslint','prettier','husky','lint-staged'
+          ]);
+
+          // Map package names to nicer display/brands
+          const MAP_DIRECT = {
+            'express':'Express',
+            'vue':'Vue.js',
+            'bootstrap':'Bootstrap',
+            'vite':'Vite',
+            'socket.io':'Socket.IO',
+            'axios':'Axios',
+            'cors':'CORS',
+            'sqlite3':'SQLite',
+            'sqlite':'SQLite',
+            'mysql2':'MySQL',
+            'pg':'PostgreSQL',
+            'mongoose':'Mongoose',
+            'mongodb':'MongoDB',
+            'redis':'Redis',
+            'typescript':'TypeScript',
+          };
 
           function normalizeLabel(s){ return String(s||'').toLowerCase().trim(); }
 
@@ -78,9 +103,11 @@ jobs:
           function readTextSafe(p){ try { return fs.readFileSync(p,'utf8'); } catch { return ''; } }
           function parseJSON(t){ try { return JSON.parse(t); } catch { return null; } }
 
+          // Build a Shields badge with brand color + logo if we can find it.
           async function makeBadgeFactory() {
-            const si = await import('simple-icons');
+            const si = await import('simple-icons'); // ESM
 
+            // Try multiple strategies to find a Simple Icons entry
             function siLookup(label) {
               const attempts = [
                 label,
@@ -137,49 +164,29 @@ jobs:
             return existingTags.concat(add);
           }
 
-          const MAP_DIRECT = {
-            'express':'Express',
-            'vue':'Vue.js',
-            'bootstrap':'Bootstrap',
-            'vite':'Vite',
-            'socket.io':'Socket.IO',
-            'axios':'Axios',
-            'cors':'CORS',
-            'sqlite3':'SQLite',
-            'sqlite':'SQLite',
-            'mysql2':'MySQL',
-            'pg':'PostgreSQL',
-            'mongoose':'Mongoose',
-            'mongodb':'MongoDB',
-            'redis':'Redis',
-            'typescript':'TypeScript',
-            'eslint':'ESLint',
-            'prettier':'Prettier',
-            'jest':'Jest',
-            'vitest':'Vitest',
-            'cypress':'Cypress',
-            'playwright':'Playwright',
-            'nodemon':'Nodemon',
-            'pm2':'PM2',
-            'nyc':'nyc/Istanbul',
-          };
-
           (async () => {
             const makeBadge = await makeBadgeFactory();
+
             const detectedBadges = [];
 
+            // Collect package.json deps/scripts
             const files = await walk(process.cwd());
             const pkgPaths = files.filter(f => /(^|\/)package\.json$/i.test(f));
 
             for (const p of pkgPaths){
               const j = parseJSON(readTextSafe(p)) || {};
               const depBuckets = [j.dependencies,j.devDependencies,j.peerDependencies,j.optionalDependencies].filter(Boolean);
+
               for (const deps of depBuckets){
                 for (const name of Object.keys(deps)){
-                  const label = MAP_DIRECT[name.toLowerCase()] || name;
+                  const raw = String(name);
+                  const n = normalizeLabel(raw);
+                  if (EXCLUDE.has(n)) continue;                      // skip noise/dev utils
+                  const label = MAP_DIRECT[n] || raw;                 // map to brand if known
                   detectedBadges.push(makeBadge(label));
                 }
               }
+
               for (const s of Object.values(j.scripts || {})){
                 const line = String(s).toLowerCase();
                 if (/vite/.test(line))      detectedBadges.push(makeBadge('Vite'));
@@ -188,6 +195,7 @@ jobs:
               }
             }
 
+            // File extension language signals
             const langTotals = new Map();
             for (const f of files) {
               const ext = path.extname(f).slice(1).toLowerCase();
@@ -198,8 +206,10 @@ jobs:
               detectedBadges.push(makeBadge(lang));
             }
 
+            // De-dupe
             const render = mergeUnique([], detectedBadges);
 
+            // Centered icons-only block
             const section = [
               '',
               '<div align="center" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;margin:0 auto;">',
@@ -208,6 +218,7 @@ jobs:
               '',
             ].join('\n');
 
+            // Replace between markers
             let readme = fs.readFileSync(README_PATH,'utf8');
             const si = readme.indexOf(START_MARKER);
             const ei = readme.indexOf(END_MARKER);
@@ -234,15 +245,19 @@ jobs:
           README_PATH: README.md
         run: |
           set -e
+
           if git diff --quiet -- "${README_PATH}"; then
             echo "No changes."
             exit 0
           fi
+
           git config --global --add safe.directory "$(pwd)"
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
           git add "${README_PATH}"
-          git commit -m "chore: refresh Tech Stack badges (auto-detected only, centered)"
+          git commit -m "chore: refresh Tech Stack badges (auto-detected only, centered, flat style)"
+
           BRANCH="${GITHUB_REF_NAME:-}"
           if [ -z "$BRANCH" ]; then
             BRANCH="$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')"
@@ -258,8 +273,12 @@ jobs:
           fi
           echo "Target branch: $BRANCH"
           git checkout -B "$BRANCH"
+
           git fetch origin
-          git pull --rebase origin "$BRANCH" || git pull --rebase origin main || git pull --rebase origin master || true
+          git pull --rebase origin "$BRANCH" || \
+          git pull --rebase origin main || \
+          git pull --rebase origin master || true
+
           PUSH_URL="https://x-access-token:${PAT_OR_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           ( git push "$PUSH_URL" HEAD:"$BRANCH" ) || (
             echo "First push failed, rebasing again and retrying..."
