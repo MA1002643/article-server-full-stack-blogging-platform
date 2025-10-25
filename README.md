@@ -22,7 +22,6 @@
 </a>
 <br>
 <em>Built with the tools and technologies:</em>
-
 <br>
 <!-- TECH-STACK:START -->
 
