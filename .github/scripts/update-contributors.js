@@ -34,10 +34,10 @@ function writeFile(p, content) {
 }
 
 function hasRequiredSection(readme) {
-  const hasSummary = readme.includes(DETAILS_SUMMARY_TEXT);
+  // Only check for markers, not the summary text (since we're using simple format)
   const hasMarkers =
     readme.includes(START_MARKER) && readme.includes(END_MARKER);
-  return hasSummary && hasMarkers;
+  return hasMarkers;
 }
 
 function replaceBetweenMarkers(readme, innerHtml) {
@@ -61,7 +61,17 @@ function buildContributorsHtml(contributors) {
       const html_url = c.html_url ?? `https://github.com/${login}`;
       const avatar = c.avatar_url;
       const alt = login;
-      return `<a href="${html_url}" title="${login}"><img src="${avatar}" width="${AVATAR_SIZE}" height="${AVATAR_SIZE}" alt="${alt}"/></a>`;
+
+      // Extract user ID from GitHub avatar URL (e.g., "https://avatars.githubusercontent.com/u/87866666?v=4")
+      const userIdMatch = avatar.match(/\/u\/(\d+)/);
+      const userId = userIdMatch ? userIdMatch[1] : "";
+
+      // Use weserv.nl for better circular avatar with border
+      const webservAvatar = userId
+        ? `https://images.weserv.nl/?url=avatars.githubusercontent.com%2Fu%2F${userId}%3Fv%3D4%26s%3D96&w=${AVATAR_SIZE}&h=${AVATAR_SIZE}&fit=cover&mask=circle&border=white&borderwidth=2`
+        : avatar; // fallback to original if we can't extract user ID
+
+      return `<a href="${html_url}" title="${login}"><img src="${webservAvatar}" alt="${alt}" width="${AVATAR_SIZE}" height="${AVATAR_SIZE}" style="border-radius: 50%;"/></a>`;
     })
     .join("\n");
 
