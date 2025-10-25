@@ -383,7 +383,6 @@
       </details>
    </details>
 
-
 </details>
 
 ---
@@ -471,10 +470,9 @@ npm test
 ## 🤝 Contributors
 
 <p align="left">
-
 <!-- CONTRIBUTORS:START -->
-<!-- CONTRIBUTORS:END -->
 
+<!-- CONTRIBUTORS:END -->
  </p>
 
 ---
