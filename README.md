@@ -25,23 +25,17 @@
 
 <!-- TECH-STACK:START -->
 
-### 🧰 Tech Stack
-
 <div align="left" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center">
-<span title="👨‍💻 Languages" style="font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid #e1e4e8;background:#fafbfc;margin:0 6px 6px 0;white-space:nowrap;"><strong>👨‍💻 Languages</strong></span>
 <img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=flat&logo=JavaScript&logoColor=black" alt="JavaScript">
 <img src="https://img.shields.io/badge/JSON-000000.svg?style=flat&logo=JSON&logoColor=white" alt="JSON">
 <img src="https://img.shields.io/badge/Markdown-000000.svg?style=flat&logo=Markdown&logoColor=white" alt="Markdown">
 <img src="https://img.shields.io/badge/HTML5-444444.svg?style=flat" alt="HTML5">
-<span title="📚 Frameworks & Libraries" style="font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid #e1e4e8;background:#fafbfc;margin:0 6px 6px 0;white-space:nowrap;"><strong>📚 Frameworks & Libraries</strong></span>
 <img src="https://img.shields.io/badge/Express-000000.svg?style=flat&logo=Express&logoColor=white" alt="Express">
 <img src="https://img.shields.io/badge/Vue.js-4FC08D.svg?style=flat&logo=vuedotjs&logoColor=white" alt="Vue.js">
 <img src="https://img.shields.io/badge/Bootstrap-7952B3.svg?style=flat&logo=Bootstrap&logoColor=white" alt="Bootstrap">
 <img src="https://img.shields.io/badge/CORS-444444.svg?style=flat" alt="CORS">
 <img src="https://img.shields.io/badge/Vite-444444.svg?style=flat" alt="Vite">
-<span title="🗄️ Databases & Cloud" style="font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid #e1e4e8;background:#fafbfc;margin:0 6px 6px 0;white-space:nowrap;"><strong>🗄️ Databases & Cloud</strong></span>
 <img src="https://img.shields.io/badge/SQLite-003B57.svg?style=flat&logo=SQLite&logoColor=white" alt="SQLite">
-<span title="🛠️ Software & Tools" style="font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid #e1e4e8;background:#fafbfc;margin:0 6px 6px 0;white-space:nowrap;"><strong>🛠️ Software & Tools</strong></span>
 <img src="https://img.shields.io/badge/npm-CB3837.svg?style=flat&logo=npm&logoColor=white" alt="npm">
 <img src="https://img.shields.io/badge/Vite-646CFF.svg?style=flat&logo=Vite&logoColor=white" alt="Vite">
 <img src="https://img.shields.io/badge/Nodemon-76D04B.svg?style=flat&logo=Nodemon&logoColor=white" alt="Nodemon">
