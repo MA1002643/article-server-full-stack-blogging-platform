@@ -47,27 +47,26 @@ jobs:
           }
 
           // ---------- Your ALWAYS-SHOW badges (exact copies, grouped) ----------
-          // Keep these EXACT so your look never changes.
           const BASE = {
             languages: [
-              `<img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=flat&logo=JavaScript&logoColor=black" alt="JavaScript">`,
-              `<img src="https://img.shields.io/badge/JSON-000000.svg?style=flat&logo=JSON&logoColor=white" alt="JSON">`,
-              `<img src="https://img.shields.io/badge/Markdown-000000.svg?style=flat&logo=Markdown&logoColor=white" alt="Markdown">`,
+              `<img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=${BADGE_STYLE}&logo=JavaScript&logoColor=black" alt="JavaScript">`,
+              `<img src="https://img.shields.io/badge/JSON-000000.svg?style=${BADGE_STYLE}&logo=JSON&logoColor=white" alt="JSON">`,
+              `<img src="https://img.shields.io/badge/Markdown-000000.svg?style=${BADGE_STYLE}&logo=Markdown&logoColor=white" alt="Markdown">`,
             ],
             frameworks: [
-              `<img src="https://img.shields.io/badge/Express-000000.svg?style=flat&logo=Express&logoColor=white" alt="Express">`,
-              `<img src="https://img.shields.io/badge/Vue.js-4FC08D.svg?style=flat&logo=vuedotjs&logoColor=white" alt="Vue.js">`,
-              `<img src="https://img.shields.io/badge/Bootstrap-7952B3.svg?style=flat&logo=Bootstrap&logoColor=white" alt="Bootstrap">`,
+              `<img src="https://img.shields.io/badge/Express-000000.svg?style=${BADGE_STYLE}&logo=Express&logoColor=white" alt="Express">`,
+              `<img src="https://img.shields.io/badge/Vue.js-4FC08D.svg?style=${BADGE_STYLE}&logo=vuedotjs&logoColor=white" alt="Vue.js">`,
+              `<img src="https://img.shields.io/badge/Bootstrap-7952B3.svg?style=${BADGE_STYLE}&logo=Bootstrap&logoColor=white" alt="Bootstrap">`,
             ],
             databases: [
-              `<img src="https://img.shields.io/badge/SQLite-003B57.svg?style=flat&logo=SQLite&logoColor=white" alt="SQLite">`,
+              `<img src="https://img.shields.io/badge/SQLite-003B57.svg?style=${BADGE_STYLE}&logo=SQLite&logoColor=white" alt="SQLite">`,
             ],
             tools: [
-              `<img src="https://img.shields.io/badge/npm-CB3837.svg?style=flat&logo=npm&logoColor=white" alt="npm">`,
-              `<img src="https://img.shields.io/badge/Vite-646CFF.svg?style=flat&logo=Vite&logoColor=white" alt="Vite">`,
-              `<img src="https://img.shields.io/badge/Nodemon-76D04B.svg?style=flat&logo=Nodemon&logoColor=white" alt="Nodemon">`,
-              `<img src="https://img.shields.io/badge/Chai-A30701.svg?style=flat&logo=Chai&logoColor=white" alt="Chai">`,
-              `<img src="https://img.shields.io/badge/Mocha-8D6748.svg?style=flat&logo=Mocha&logoColor=white" alt="Mocha">`,
+              `<img src="https://img.shields.io/badge/npm-CB3837.svg?style=${BADGE_STYLE}&logo=npm&logoColor=white" alt="npm">`,
+              `<img src="https://img.shields.io/badge/Vite-646CFF.svg?style=${BADGE_STYLE}&logo=Vite&logoColor=white" alt="Vite">`,
+              `<img src="https://img.shields.io/badge/Nodemon-76D04B.svg?style=${BADGE_STYLE}&logo=Nodemon&logoColor=white" alt="Nodemon">`,
+              `<img src="https://img.shields.io/badge/Chai-A30701.svg?style=${BADGE_STYLE}&logo=Chai&logoColor=white" alt="Chai">`,
+              `<img src="https://img.shields.io/badge/Mocha-8D6748.svg?style=${BADGE_STYLE}&logo=Mocha&logoColor=white" alt="Mocha">`,
             ],
           };
 
@@ -105,7 +104,7 @@ jobs:
           // Build a badge (HTML <img>) with brand color/logo where possible
           async function makeBadgeFactory() {
             const SI = await import('simple-icons');
-            const preferWhiteLogo = (label) => true; // keep white logos for consistency
+            const preferWhiteLogo = () => true; // keep white logos for consistency
 
             function siLookup(label) {
               const variants = [
@@ -151,10 +150,15 @@ jobs:
             return existingTags.concat(add);
           }
 
+          // Small inline "chip" to separate groups while keeping one continuous block
+          function chip(text){
+            return `<span title="${text}" style="font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid #e1e4e8;background:#fafbfc;margin:0 6px 6px 0;white-space:nowrap;"><strong>${text}</strong></span>`;
+          }
+
           (async () => {
             const makeBadge = await makeBadgeFactory();
 
-            // 1) Start with your BASE (guaranteed)
+            // 1) Start with BASE (guaranteed)
             const buckets = {
               languages: [...BASE.languages],
               frameworks: [...BASE.frameworks],
@@ -162,7 +166,7 @@ jobs:
               tools:      [...BASE.tools],
             };
 
-            // 2) Detect extra tech from package.json, Docker, etc.
+            // 2) Detect extra tech from package.json, scripts, etc.
             const files = await walk(process.cwd());
             const pkgPaths = files.filter(f => /(^|\/)package\.json$/i.test(f));
 
@@ -179,7 +183,7 @@ jobs:
               'eslint':'ESLint','prettier':'Prettier','nodemon':'Nodemon','pm2':'PM2','nyc':'nyc/Istanbul'
             };
 
-            const addBadges = (labels, group) => labels.map(l => makeBadge(l));
+            const addBadges = (labels) => labels.map(l => makeBadge(l));
 
             for (const p of pkgPaths){
               const j = parseJSON(readTextSafe(p)) || {};
@@ -187,18 +191,18 @@ jobs:
               for (const deps of depBuckets){
                 for (const name of Object.keys(deps)){
                   const n = normalizeLabel(name);
-                  if (FW_MAP[n])    buckets.frameworks = mergeUnique(buckets.frameworks, addBadges([FW_MAP[n]], 'frameworks'));
-                  if (DB_MAP[n])    buckets.databases  = mergeUnique(buckets.databases,  addBadges([DB_MAP[n]], 'databases'));
-                  if (TOOL_MAP[n])  buckets.tools      = mergeUnique(buckets.tools,      addBadges([TOOL_MAP[n]], 'tools'));
-                  if (n === 'typescript') buckets.languages = mergeUnique(buckets.languages, addBadges(['TypeScript'],'languages'));
+                  if (FW_MAP[n])    buckets.frameworks = mergeUnique(buckets.frameworks, addBadges([FW_MAP[n]]));
+                  if (DB_MAP[n])    buckets.databases  = mergeUnique(buckets.databases,  addBadges([DB_MAP[n]]));
+                  if (TOOL_MAP[n])  buckets.tools      = mergeUnique(buckets.tools,      addBadges([TOOL_MAP[n]]));
+                  if (n === 'typescript') buckets.languages = mergeUnique(buckets.languages, addBadges(['TypeScript']));
                 }
               }
               // Scripts hints
               for (const s of Object.values(j.scripts || {})){
                 const line = String(s).toLowerCase();
-                if (/vite/.test(line)) buckets.frameworks = mergeUnique(buckets.frameworks, addBadges(['Vite'],'frameworks'));
-                if (/eslint/.test(line)) buckets.tools = mergeUnique(buckets.tools, addBadges(['ESLint'],'tools'));
-                if (/prettier/.test(line)) buckets.tools = mergeUnique(buckets.tools, addBadges(['Prettier'],'tools'));
+                if (/vite/.test(line)) buckets.frameworks = mergeUnique(buckets.frameworks, addBadges(['Vite']));
+                if (/eslint/.test(line)) buckets.tools = mergeUnique(buckets.tools, addBadges(['ESLint']));
+                if (/prettier/.test(line)) buckets.tools = mergeUnique(buckets.tools, addBadges(['Prettier']));
               }
             }
 
@@ -213,25 +217,21 @@ jobs:
               buckets.languages = mergeUnique(buckets.languages, [ makeBadge(lang) ]);
             }
 
-            // 3) Build ONE section with four categories (same as your headings)
+            // 3) Build ONE compact section: all badges in a single flex container, with tiny chips separating groups
             const section = [
               '',
               '### 🧰 Tech Stack',
               '',
-              '**👨‍💻 Programming and Markup Languages**',
-              buckets.languages.join('\n'),
-              '<br>',
-              '',
-              '**🧰 Frameworks and Libraries**',
-              buckets.frameworks.join('\n'),
-              '<br>',
-              '',
-              '**🗄️ Databases and Cloud Hosting**',
-              buckets.databases.join('\n'),
-              '<br>',
-              '',
-              '**💻 Software and Tools**',
-              buckets.tools.join('\n'),
+              '<div align="left" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center">',
+              chip('👨‍💻 Languages'),
+              ...buckets.languages,
+              chip('📚 Frameworks & Libraries'),
+              ...buckets.frameworks,
+              chip('🗄️ Databases & Cloud'),
+              ...buckets.databases,
+              chip('🛠️ Software & Tools'),
+              ...buckets.tools,
+              '</div>',
               '',
             ].join('\n');
 
@@ -252,7 +252,7 @@ jobs:
               process.exit(0);
             }
             fs.writeFileSync(README_PATH, next, 'utf8');
-            console.log('✅ README tech stack section updated.');
+            console.log('✅ README tech stack section updated (single compact block).');
           })().catch(e => { console.error('❌ Failed:', e); process.exit(1); });
           NODE
 
@@ -268,7 +268,7 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "${README_PATH}"
-          git commit -m "chore: refresh Tech Stack badges (single-section, flat style)"
+          git commit -m "chore: refresh Tech Stack badges (single compact block, flat style)"
           git push https://x-access-token:${PAT_OR_TOKEN}@github.com/${GITHUB_REPOSITORY}.git HEAD:${GITHUB_REF_NAME:-main} || \
           git push https://x-access-token:${PAT_OR_TOKEN}@github.com/${GITHUB_REPOSITORY}.git HEAD:main || \
           git push https://x-access-token:${PAT_OR_TOKEN}@github.com/${GITHUB_REPOSITORY}.git HEAD:master
