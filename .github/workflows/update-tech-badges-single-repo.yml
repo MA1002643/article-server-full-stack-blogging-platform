@@ -2,9 +2,10 @@ name: Update tech badges
 
 on:
   push:
-    branches: ["**"]
-  schedule:
-    - cron: "0 9 * * 1" # Mondays 09:00 UTC
+    branches: ["**"] # any branch
+    tags: ["**"] # any tag
+  pull_request:
+    branches: ["**"] # run for commits pushed to PRs
   workflow_dispatch:
 
 permissions:
@@ -47,31 +48,6 @@ jobs:
             process.exit(1);
           }
 
-          // Always-show base badges (preserve your exact look)
-          const BASE = {
-            languages: [
-              `<img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=${BADGE_STYLE}&logo=JavaScript&logoColor=black" alt="JavaScript">`,
-              `<img src="https://img.shields.io/badge/JSON-000000.svg?style=${BADGE_STYLE}&logo=JSON&logoColor=white" alt="JSON">`,
-              `<img src="https://img.shields.io/badge/Markdown-000000.svg?style=${BADGE_STYLE}&logo=Markdown&logoColor=white" alt="Markdown">`,
-            ],
-            frameworks: [
-              `<img src="https://img.shields.io/badge/Express-000000.svg?style=${BADGE_STYLE}&logo=Express&logoColor=white" alt="Express">`,
-              `<img src="https://img.shields.io/badge/Vue.js-4FC08D.svg?style=${BADGE_STYLE}&logo=vuedotjs&logoColor=white" alt="Vue.js">`,
-              `<img src="https://img.shields.io/badge/Bootstrap-7952B3.svg?style=${BADGE_STYLE}&logo=Bootstrap&logoColor=white" alt="Bootstrap">`,
-            ],
-            databases: [
-              `<img src="https://img.shields.io/badge/SQLite-003B57.svg?style=${BADGE_STYLE}&logo=SQLite&logoColor=white" alt="SQLite">`,
-            ],
-            tools: [
-              `<img src="https://img.shields.io/badge/npm-CB3837.svg?style=${BADGE_STYLE}&logo=npm&logoColor=white" alt="npm">`,
-              `<img src="https://img.shields.io/badge/Vite-646CFF.svg?style=${BADGE_STYLE}&logo=Vite&logoColor=white" alt="Vite">`,
-              `<img src="https://img.shields.io/badge/Nodemon-76D04B.svg?style=${BADGE_STYLE}&logo=Nodemon&logoColor=white" alt="Nodemon">`,
-              `<img src="https://img.shields.io/badge/Chai-A30701.svg?style=${BADGE_STYLE}&logo=Chai&logoColor=white" alt="Chai">`,
-              `<img src="https://img.shields.io/badge/Mocha-8D6748.svg?style=${BADGE_STYLE}&logo=Mocha&logoColor=white" alt="Mocha">`,
-            ],
-          };
-
-          // --- Helpers for auto-detect ---
           const IGNORE_DIRS = new Set(['.git','node_modules','dist','build','coverage','.next','.turbo','.cache','.venv','vendor','target','bin','obj']);
           const EXT_LANG = new Map(Object.entries({
             "js":"JavaScript","jsx":"JavaScript","mjs":"JavaScript",
@@ -103,38 +79,49 @@ jobs:
           function parseJSON(t){ try { return JSON.parse(t); } catch { return null; } }
 
           async function makeBadgeFactory() {
-            const SI = await import('simple-icons');
-            const preferWhiteLogo = () => true;
+            const si = await import('simple-icons');
 
             function siLookup(label) {
-              const variants = [
+              const attempts = [
                 label,
                 label.replace(/\./g,'dot'),
-                label.replace(/\s+/g,''),
                 label.replace(/\+/g,'plus'),
                 label.replace(/#/g,'sharp'),
+                label.replace(/\s+/g,' '),
+                label.replace(/\s+/g,'-').toLowerCase(),
                 label.toLowerCase(),
               ];
-              for (const v of variants) {
-                const icon = SI.get?.(v) || SI.get?.(v.replace(/\s+/g,''));
+              const getFn = si.get || si.Get || null;
+              for (const attempt of attempts) {
+                let icon = null;
+                if (getFn) icon = getFn(attempt) || getFn(String(attempt).replace(/\s+/g,''));
+                if (!icon) {
+                  for (const k of Object.keys(si)) {
+                    const v = si[k];
+                    if (v && typeof v === 'object' && 'title' in v && 'slug' in v) {
+                      if (normalizeLabel(v.title) === normalizeLabel(attempt)) { icon = v; break; }
+                      if (normalizeLabel(v.slug)  === normalizeLabel(attempt)) { icon = v; break; }
+                    }
+                  }
+                }
                 if (icon) return icon;
               }
               return null;
             }
 
-            return (label, opts={}) => {
+            return (label) => {
               const icon = siLookup(label);
-              const hex = (opts.hex || icon?.hex || '444444').replace(/^#/, '');
-              const logo = opts.logo || (icon ? encodeURIComponent(icon.slug) : undefined);
+              const hex  = (icon?.hex || '444444').replace(/^#/, '');
+              const slug = icon?.slug || label.replace(/\s+/g,'-').toLowerCase();
               const encLabel = encodeURIComponent(label);
               let url = `https://img.shields.io/badge/${encLabel}-${hex}.svg?style=${BADGE_STYLE}`;
-              if (logo) url += `&logo=${logo}&logoColor=${preferWhiteLogo(label) ? 'white' : 'black'}`;
+              if (slug) url += `&logo=${encodeURIComponent(slug)}&logoColor=white`;
               return `<img src="${url}" alt="${label}">`;
             };
           }
 
           function labelFromImgTag(tag){
-            const m = tag.match(/alt="([^"]+)"/i);
+            const m = tag.match?.(/alt="([^"]+)"/i);
             return m ? m[1].trim() : null;
           }
 
@@ -142,63 +129,65 @@ jobs:
             const seen = new Set(existingTags.map(labelFromImgTag).filter(Boolean).map(normalizeLabel));
             const add = [];
             for (const t of newTags){
-              const l = normalizeLabel(labelFromImgTag(t));
-              if (l && !seen.has(l)) { seen.add(l); add.push(t); }
+              const l = labelFromImgTag(t);
+              if (!l) continue;
+              const n = normalizeLabel(l);
+              if (!seen.has(n)) { seen.add(n); add.push(t); }
             }
             return existingTags.concat(add);
           }
 
+          const MAP_DIRECT = {
+            'express':'Express',
+            'vue':'Vue.js',
+            'bootstrap':'Bootstrap',
+            'vite':'Vite',
+            'socket.io':'Socket.IO',
+            'axios':'Axios',
+            'cors':'CORS',
+            'sqlite3':'SQLite',
+            'sqlite':'SQLite',
+            'mysql2':'MySQL',
+            'pg':'PostgreSQL',
+            'mongoose':'Mongoose',
+            'mongodb':'MongoDB',
+            'redis':'Redis',
+            'typescript':'TypeScript',
+            'eslint':'ESLint',
+            'prettier':'Prettier',
+            'jest':'Jest',
+            'vitest':'Vitest',
+            'cypress':'Cypress',
+            'playwright':'Playwright',
+            'nodemon':'Nodemon',
+            'pm2':'PM2',
+            'nyc':'nyc/Istanbul',
+          };
+
           (async () => {
             const makeBadge = await makeBadgeFactory();
+            const detectedBadges = [];
 
-            // Start with BASE
-            const buckets = {
-              languages: [...BASE.languages],
-              frameworks: [...BASE.frameworks],
-              databases:  [...BASE.databases],
-              tools:      [...BASE.tools],
-            };
-
-            // Detect extra tech from package.json etc.
             const files = await walk(process.cwd());
             const pkgPaths = files.filter(f => /(^|\/)package\.json$/i.test(f));
-
-            const FW_MAP = {
-              'express':'Express', 'vue':'Vue.js', 'bootstrap':'Bootstrap', 'vite':'Vite',
-              'socket.io':'Socket.IO', 'axios':'Axios', 'cors':'CORS', 'dotenv':'dotenv', 'ws':'ws'
-            };
-            const DB_MAP = {
-              'sqlite3':'SQLite', 'sqlite':'SQLite', 'mongoose':'Mongoose', 'mongodb':'MongoDB',
-              'pg':'PostgreSQL', 'mysql':'MySQL', 'redis':'Redis'
-            };
-            const TOOL_MAP = {
-              'mocha':'Mocha','chai':'Chai','jest':'Jest','vitest':'Vitest','cypress':'Cypress','playwright':'Playwright',
-              'eslint':'ESLint','prettier':'Prettier','nodemon':'Nodemon','pm2':'PM2','nyc':'nyc/Istanbul'
-            };
-
-            const addBadges = (labels) => labels.map(l => makeBadge(l));
 
             for (const p of pkgPaths){
               const j = parseJSON(readTextSafe(p)) || {};
               const depBuckets = [j.dependencies,j.devDependencies,j.peerDependencies,j.optionalDependencies].filter(Boolean);
               for (const deps of depBuckets){
                 for (const name of Object.keys(deps)){
-                  const n = normalizeLabel(name);
-                  if (FW_MAP[n])    buckets.frameworks = mergeUnique(buckets.frameworks, addBadges([FW_MAP[n]]));
-                  if (DB_MAP[n])    buckets.databases  = mergeUnique(buckets.databases,  addBadges([DB_MAP[n]]));
-                  if (TOOL_MAP[n])  buckets.tools      = mergeUnique(buckets.tools,      addBadges([TOOL_MAP[n]]));
-                  if (n === 'typescript') buckets.languages = mergeUnique(buckets.languages, addBadges(['TypeScript']));
+                  const label = MAP_DIRECT[name.toLowerCase()] || name;
+                  detectedBadges.push(makeBadge(label));
                 }
               }
               for (const s of Object.values(j.scripts || {})){
                 const line = String(s).toLowerCase();
-                if (/vite/.test(line)) buckets.frameworks = mergeUnique(buckets.frameworks, addBadges(['Vite']));
-                if (/eslint/.test(line)) buckets.tools = mergeUnique(buckets.tools, addBadges(['ESLint']));
-                if (/prettier/.test(line)) buckets.tools = mergeUnique(buckets.tools, addBadges(['Prettier']));
+                if (/vite/.test(line))      detectedBadges.push(makeBadge('Vite'));
+                if (/eslint/.test(line))    detectedBadges.push(makeBadge('ESLint'));
+                if (/prettier/.test(line))  detectedBadges.push(makeBadge('Prettier'));
               }
             }
 
-            // Language detection by extensions
             const langTotals = new Map();
             for (const f of files) {
               const ext = path.extname(f).slice(1).toLowerCase();
@@ -206,22 +195,19 @@ jobs:
               if (lang) langTotals.set(lang, (langTotals.get(lang)||0) + (fs.statSync(f).size || 0));
             }
             for (const lang of [...langTotals.keys()]) {
-              buckets.languages = mergeUnique(buckets.languages, [ makeBadge(lang) ]);
+              detectedBadges.push(makeBadge(lang));
             }
 
-            // CENTERED, icons-only block
+            const render = mergeUnique([], detectedBadges);
+
             const section = [
               '',
               '<div align="center" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;margin:0 auto;">',
-              ...buckets.languages,
-              ...buckets.frameworks,
-              ...buckets.databases,
-              ...buckets.tools,
+              ...render,
               '</div>',
               '',
             ].join('\n');
 
-            // Replace between markers
             let readme = fs.readFileSync(README_PATH,'utf8');
             const si = readme.indexOf(START_MARKER);
             const ei = readme.indexOf(END_MARKER);
@@ -238,7 +224,7 @@ jobs:
               process.exit(0);
             }
             fs.writeFileSync(README_PATH, next, 'utf8');
-            console.log('✅ README tech stack badges updated (icons only, centered).');
+            console.log('✅ README tech stack badges updated (auto-detected only, centered).');
           })().catch(e => { console.error('❌ Failed:', e); process.exit(1); });
           NODE
 
@@ -248,19 +234,15 @@ jobs:
           README_PATH: README.md
         run: |
           set -e
-
           if git diff --quiet -- "${README_PATH}"; then
             echo "No changes."
             exit 0
           fi
-
           git config --global --add safe.directory "$(pwd)"
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
           git add "${README_PATH}"
-          git commit -m "chore: refresh Tech Stack badges (icons only, centered, flat style)"
-
+          git commit -m "chore: refresh Tech Stack badges (auto-detected only, centered)"
           BRANCH="${GITHUB_REF_NAME:-}"
           if [ -z "$BRANCH" ]; then
             BRANCH="$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')"
@@ -276,12 +258,8 @@ jobs:
           fi
           echo "Target branch: $BRANCH"
           git checkout -B "$BRANCH"
-
           git fetch origin
-          git pull --rebase origin "$BRANCH" || \
-          git pull --rebase origin main || \
-          git pull --rebase origin master || true
-
+          git pull --rebase origin "$BRANCH" || git pull --rebase origin main || git pull --rebase origin master || true
           PUSH_URL="https://x-access-token:${PAT_OR_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           ( git push "$PUSH_URL" HEAD:"$BRANCH" ) || (
             echo "First push failed, rebasing again and retrying..."
