@@ -55,18 +55,20 @@
 ## 📄 Table of Contents
 
 - [Overview](#-overview)
+- [UI Preview](#-ui-preview)
+- [Features](#-features)
+- [Project Structure](#-project-structure)
+  - [Project Index](#-project-index)
 - [Getting Started](#-getting-started)
   - [Prerequisites](#-prerequisites)
   - [Installation](#-installation)
   - [Usage](#-usage)
   - [Testing](#-testing)
-- [Features](#-features)
-- [Project Structure](#-project-structure)
-  - [Project Index](#-project-index)
+- [Learning Outcomes](#-learning-outcomes)
 - [Roadmap](#-roadmap)
-- [Contributing](#-contributing)
+- [Contributors](#-contributors)
+- [Acknowledgments](#-acknowledgments)
 - [License](#-license)
-- [Acknowledgment](#-acknowledgment)
 
 ---
 
@@ -374,7 +376,6 @@
       </details>
       </details>
    </details>
-
 
 </details>
 
