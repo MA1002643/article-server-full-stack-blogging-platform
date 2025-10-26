@@ -77,7 +77,7 @@ This repository serves as a community space to:
 2. Use the Feature Request template
 3. Describe clearly:
    - The feature you'd like to see
-   - Why it would be valuable for Vevox users
+   - Why it would be valuable for Article Server users
    - Any design/implementation ideas or trade-offs
 
 <a id="proposing-an-integration-or-extension"></a>
